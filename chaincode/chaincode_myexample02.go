@@ -234,7 +234,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	}
 
 	iddata, err := stub.GetState("ID")
-	fmt.Printf("ID: " + iddata)
+	fmt.Printf("ID: " + string(iddata))
 
 	jsonResp := "{\"Name\":\"" + A + "\",\"Amount\":\"" + string(Avalbytes) + "\"}"
 	fmt.Printf("Query Response:%s\n", jsonResp)
