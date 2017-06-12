@@ -56,7 +56,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	}
 	fmt.Printf("Aval = %d, Bval = %d\n", Aval, Bval)
 
-	var id = A + ", " + B;
+	var id string = A + ", " + B
 	err = stub.PutState("ID",  []byte(id))
 	if err != nil {
 		return nil, errors.New("ID SET ERROR!")
