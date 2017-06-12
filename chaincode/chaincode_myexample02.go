@@ -56,6 +56,11 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	}
 	fmt.Printf("Aval = %d, Bval = %d\n", Aval, Bval)
 
+	err := stub.PutState("ID", A + ", " + B)
+	if err != nil {
+		return nil, errors.New("ID SET ERROR!")
+	}
+
 	// Write the state to the ledger
 	err = stub.PutState(A, []byte(strconv.Itoa(Aval)))
 	if err != nil {
@@ -226,6 +231,9 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 		jsonResp := "{\"Error\":\"Nil amount for " + A + "\"}"
 		return nil, errors.New(jsonResp)
 	}
+
+	iddata, err := stub.GetState("ID")
+	fmt.Printf("ID: " + iddata)
 
 	jsonResp := "{\"Name\":\"" + A + "\",\"Amount\":\"" + string(Avalbytes) + "\"}"
 	fmt.Printf("Query Response:%s\n", jsonResp)
