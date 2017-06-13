@@ -220,19 +220,22 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	}
 
 	key := args[0]
-	Avalbytes, err := stub.GetState(key)
-	if err != nil {
-		jsonResp := "{\"Error\":\"Failed to get state for " + key + "\"}"
-		return nil, errors.New(jsonResp)
-	}
-	if Avalbytes == nil {
-		jsonResp := "{\"Error\":\"Nil amount for " + key + "\"}"
-		return nil, errors.New(jsonResp)
-	}
-
-	jsonResp := "{\"Name\":\"" + key + "\",\"Value\":\"" + string(Avalbytes) + "\"}"
-	fmt.Printf("Query Response:%s\n", jsonResp)
-	return Avalbytes, nil
+//	Avalbytes, err := stub.GetState(key)
+//	if err != nil {
+//		jsonResp := "{\"Error\":\"Failed to get state for " + key + "\"}"
+//		return nil, errors.New(jsonResp)
+//	}
+//	if Avalbytes == nil {
+//		jsonResp := "{\"Error\":\"Nil amount for " + key + "\"}"
+//		return nil, errors.New(jsonResp)
+//	}
+//
+//	jsonResp := "{\"Name\":\"" + key + "\",\"Value\":\"" + string(Avalbytes) + "\"}"
+//	fmt.Printf("Query Response:%s\n", jsonResp)
+	
+	fmt.Printf(key)
+	return nil, nil
+//	return Avalbytes, nil
 }
 
 func main() {
