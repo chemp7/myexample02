@@ -39,8 +39,8 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 //	var Aval, Bval int // Asset holdings
 	var err error
 
-	var Id, Name, Date, Detail string
-	var IdVal, NameVal, DateVal, DetailVal string
+//	var Id, Name, Date, Detail string
+//	var IdVal, NameVal, DateVal, DetailVal string
 	
 	if len(args) != 8 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 8")
