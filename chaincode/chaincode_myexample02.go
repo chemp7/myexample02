@@ -234,7 +234,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 //	fmt.Printf("Query Response:%s\n", jsonResp)
 	
 	fmt.Printf(key)
-	return nil, nil
+	return []byte("123ABC456"), nil
 //	return Avalbytes, nil
 }
 
