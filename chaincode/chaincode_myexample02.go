@@ -239,12 +239,16 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 //		return nil, errors.New(jsonResp)
 //	}
 
-	Id, err := stub.GetState("Id")
-	fmt.Printf("Id: " + string(Id))
+	param, err := stub.GetState(A)
+	if err != nil {
+		jsonResp := "{\"Error\":\"Failed to get state for " + A + "\"}"
+		return nil, errors.New(jsonResp)
+	}
+	fmt.Printf("Id: " + string(param))
 
-	jsonResp := "{\"Name\":\"" + A + "\",\"Amount\":\"" + string(Id) + "\"}"
+	jsonResp := "{\"Name\":\"" + A + "\",\"Value\":\"" + string(param) + "\"}"
 	fmt.Printf("Query Response:%s\n", jsonResp)
-	return Id, nil
+	return param, nil
 }
 
 func main() {
