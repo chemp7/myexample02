@@ -63,25 +63,25 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	if err != nil {
 		return nil, errors.New(" Id: ERROR! ")
 	}
-	fmt.Printf("--- set Id 001 ---")
+	fmt.Printf("@--- set Id 001 ---")
 
 	err = stub.PutState("Name",  []byte(args[1]))
 	if err != nil {
 		return nil, errors.New(" Name: ERROR! ")
 	}
-	fmt.Printf("--- set Name 001 ---")
+	fmt.Printf("@--- set Name 001 ---")
 
 	err = stub.PutState("Date",  []byte(args[2]))
 	if err != nil {
 		return nil, errors.New(" Date: ERROR! ")
 	}
-	fmt.Printf("--- set Date 001 ---")
+	fmt.Printf("@--- set Date 001 ---")
 
 	err = stub.PutState("Detail",  []byte(args[3]))
 	if err != nil {
 		return nil, errors.New(" Detail: ERROR! ")
 	}
-	fmt.Printf("--- set Detail 001 ---")
+	fmt.Printf("@--- set Detail 001 ---")
 
 	return nil, nil
 }
