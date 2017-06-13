@@ -219,7 +219,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 		return nil, errors.New("1113 Invalid query function name. Expecting \"query\"")
 	}
 
-	key = args[0]
+	key := args[0]
 	Avalbytes, err := stub.GetState(key)
 	if err != nil {
 		jsonResp := "{\"Error\":\"Failed to get state for " + key + "\"}"
