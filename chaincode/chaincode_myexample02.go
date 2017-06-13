@@ -228,21 +228,21 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	A = args[0]
 
 	// Get the state from the ledger
-	Avalbytes, err := stub.GetState(A)
-	if err != nil {
-		jsonResp := "{\"Error\":\"Failed to get state for " + A + "\"}"
-		return nil, errors.New(jsonResp)
-	}
+//	Avalbytes, err := stub.GetState(A)
+//	if err != nil {
+//		jsonResp := "{\"Error\":\"Failed to get state for " + A + "\"}"
+//		return nil, errors.New(jsonResp)
+//	}
 
-	if Avalbytes == nil {
-		jsonResp := "{\"Error\":\"Nil amount for " + A + "\"}"
-		return nil, errors.New(jsonResp)
-	}
+//	if Avalbytes == nil {
+//		jsonResp := "{\"Error\":\"Nil amount for " + A + "\"}"
+//		return nil, errors.New(jsonResp)
+//	}
 
-	iddata, err := stub.GetState("ID")
-	fmt.Printf("ID: " + string(iddata))
+	iddata, err := stub.GetState("Id")
+	fmt.Printf("Id: " + string(iddata))
 
-	jsonResp := "{\"Name\":\"" + A + "\",\"Amount\":\"" + string(Avalbytes) + "\"}"
+	jsonResp := "{\"Name\":\"" + A + "\",\"Amount\":\"" + string(iddata) + "\"}"
 	fmt.Printf("Query Response:%s\n", jsonResp)
 	return Avalbytes, nil
 }
