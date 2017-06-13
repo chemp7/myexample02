@@ -63,21 +63,25 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	if err != nil {
 		return nil, errors.New(" Id: ERROR! ")
 	}
+	fmt.Printf("--- set Id 001 ---")
 
 	err = stub.PutState("Name",  []byte(args[1]))
 	if err != nil {
 		return nil, errors.New(" Name: ERROR! ")
 	}
+	fmt.Printf("--- set Name 001 ---")
 
 	err = stub.PutState("Date",  []byte(args[2]))
 	if err != nil {
 		return nil, errors.New(" Date: ERROR! ")
 	}
+	fmt.Printf("--- set Date 001 ---")
 
 	err = stub.PutState("Detail",  []byte(args[3]))
 	if err != nil {
 		return nil, errors.New(" Detail: ERROR! ")
 	}
+	fmt.Printf("--- set Detail 001 ---")
 
 	return nil, nil
 }
@@ -210,60 +214,23 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
     	converted := sha256.Sum256([]byte("123ABC456"))
 	fmt.Printf("@@@ hash: " + hex.EncodeToString(converted[:]))
 
-	if function == "query2" {
-		fmt.Printf("Function is query")
-		return nil, errors.New("2223 Invalid query function name. Expecting \"query\"")
-	}
 	if function != "query" {
 		fmt.Printf("Function is query")
 		return nil, errors.New("1113 Invalid query function name. Expecting \"query\"")
 	}
-	if false {
-		var A string // Entities
-		var err error
 
-		if len(args) != 1 {
-			return nil, errors.New("Incorrect number of arguments. Expecting name of the person to query")
-		}
-
-		A = args[0]
-
-		// Get the state from the ledger
-	//	Avalbytes, err := stub.GetState(A)
-	//	if err != nil {
-	//		jsonResp := "{\"Error\":\"Failed to get state for " + A + "\"}"
-	//		return nil, errors.New(jsonResp)
-	//	}
-
-	//	if Avalbytes == nil {
-	//		jsonResp := "{\"Error\":\"Nil amount for " + A + "\"}"
-	//		return nil, errors.New(jsonResp)
-	//	}
-
-		param, err := stub.GetState(A)
-		if err != nil {
-			jsonResp := "{\"Error\":\"Failed to get state for " + A + "\"}"
-			return nil, errors.New(jsonResp)
-		}
-		fmt.Printf("Id: " + string(param))
-
-		jsonResp := "{\"Name\":\"" + A + "\",\"Value\":\"" + string(param) + "\"}"
-		fmt.Printf("Query Response:%s\n", jsonResp)
-		return param, nil
-	}
-
-	Avalbytes, err := stub.GetState("Id")
+	key = args[0]
+	Avalbytes, err := stub.GetState(key)
 	if err != nil {
-		jsonResp := "{\"Error\":\"Failed to get state for " + "Id" + "\"}"
+		jsonResp := "{\"Error\":\"Failed to get state for " + key + "\"}"
 		return nil, errors.New(jsonResp)
 	}
-
 	if Avalbytes == nil {
-		jsonResp := "{\"Error\":\"Nil amount for " + "Id" + "\"}"
+		jsonResp := "{\"Error\":\"Nil amount for " + key + "\"}"
 		return nil, errors.New(jsonResp)
 	}
 
-	jsonResp := "{\"Name\":\"" + "Id" + "\",\"Amount\":\"" + string(Avalbytes) + "\"}"
+	jsonResp := "{\"Name\":\"" + key + "\",\"Value\":\"" + string(Avalbytes) + "\"}"
 	fmt.Printf("Query Response:%s\n", jsonResp)
 	return Avalbytes, nil
 }
