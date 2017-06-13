@@ -34,43 +34,49 @@ type SimpleChaincode struct {
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Printf("--- Init001 ---")
 	fmt.Printf("Init called, initializing chaincode")
-	
-	var A, B string    // Entities
-	var Aval, Bval int // Asset holdings
+	// ID, Name, Date, Detail
+//	var A, B string    // Entities
+//	var Aval, Bval int // Asset holdings
 	var err error
 
-	if len(args) != 4 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 4")
+	var Id, Name, Date, Detail string
+	var IdVal, NameVal, DateVal, DetailVal string
+	
+	if len(args) != 8 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 8")
 	}
 
 	// Initialize the chaincode
-	A = args[0]
-	Aval, err = strconv.Atoi(args[1])
-	if err != nil {
-		return nil, errors.New("Expecting integer value for asset holding")
-	}
-	B = args[2]
-	Bval, err = strconv.Atoi(args[3])
-	if err != nil {
-		return nil, errors.New("Expecting integer value for asset holding")
-	}
-	fmt.Printf("Aval = %d, Bval = %d\n", Aval, Bval)
+//	A = args[0]
+//	Aval, err = strconv.Atoi(args[1])
+//	if err != nil {
+//		return nil, errors.New("Expecting integer value for asset holding")
+//	}
+//	B = args[2]
+//	Bval, err = strconv.Atoi(args[3])
+//	if err != nil {
+//		return nil, errors.New("Expecting integer value for asset holding")
+//	}
+//	fmt.Printf("Aval = %d, Bval = %d\n", Aval, Bval)
 
-	var id string = A + ", " + B
-	err = stub.PutState("ID",  []byte(id))
+	err = stub.PutState("Id",  []byte(args[0]))
 	if err != nil {
-		return nil, errors.New("ID SET ERROR!")
-	}
-
-	// Write the state to the ledger
-	err = stub.PutState(A, []byte(strconv.Itoa(Aval)))
-	if err != nil {
-		return nil, err
+		return nil, errors.New(" Id: ERROR! ")
 	}
 
-	err = stub.PutState(B, []byte(strconv.Itoa(Bval)))
+	err = stub.PutState("Name",  []byte(args[1]))
 	if err != nil {
-		return nil, err
+		return nil, errors.New(" Name: ERROR! ")
+	}
+
+	err = stub.PutState("Date",  []byte(args[2]))
+	if err != nil {
+		return nil, errors.New(" Date: ERROR! ")
+	}
+
+	err = stub.PutState("Detail",  []byte(args[3]))
+	if err != nil {
+		return nil, errors.New(" Detail: ERROR! ")
 	}
 
 	return nil, nil
