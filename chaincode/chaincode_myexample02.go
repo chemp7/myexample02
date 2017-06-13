@@ -251,13 +251,21 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 		fmt.Printf("Query Response:%s\n", jsonResp)
 		return param, nil
 	}
-	key = args[0]
-	valAsbytes, err := stub.GetState(key)
+
+	Avalbytes, err := stub.GetState("Id")
 	if err != nil {
-		jsonResp = "{\"Error\":\"Failed to get state for " + key + "\"}"
+		jsonResp := "{\"Error\":\"Failed to get state for " + "Id" + "\"}"
 		return nil, errors.New(jsonResp)
 	}
-	returm valAsbytes, nil
+
+	if Avalbytes == nil {
+		jsonResp := "{\"Error\":\"Nil amount for " + "Id" + "\"}"
+		return nil, errors.New(jsonResp)
+	}
+
+	jsonResp := "{\"Name\":\"" + "Id" + "\",\"Amount\":\"" + string(Avalbytes) + "\"}"
+	fmt.Printf("Query Response:%s\n", jsonResp)
+	return Avalbytes, nil
 }
 
 func main() {
