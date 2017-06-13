@@ -213,29 +213,39 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	fmt.Printf("Query called, determining function")
     	converted := sha256.Sum256([]byte("123ABC456"))
 	fmt.Printf("@@@ hash: " + hex.EncodeToString(converted[:]))
-
+	
+	if function == "query2" {
+		fmt.Printf("Function is query")
+		return nil, errors.New("2223 Invalid query function name. Expecting \"query\"")
+	}
 	if function != "query" {
 		fmt.Printf("Function is query")
 		return nil, errors.New("1113 Invalid query function name. Expecting \"query\"")
 	}
+	var A string // Entities
+	var err error
 
-	key := args[0]
-//	Avalbytes, err := stub.GetState(key)
-//	if err != nil {
-//		jsonResp := "{\"Error\":\"Failed to get state for " + key + "\"}"
-//		return nil, errors.New(jsonResp)
-//	}
-//	if Avalbytes == nil {
-//		jsonResp := "{\"Error\":\"Nil amount for " + key + "\"}"
-//		return nil, errors.New(jsonResp)
-//	}
-//
-//	jsonResp := "{\"Name\":\"" + key + "\",\"Value\":\"" + string(Avalbytes) + "\"}"
-//	fmt.Printf("Query Response:%s\n", jsonResp)
-	
-	fmt.Printf(key)
-	return []byte("123ABC456"), nil
-//	return Avalbytes, nil
+	if len(args) != 1 {
+		return nil, errors.New("Incorrect number of arguments. Expecting name of the person to query")
+	}
+
+	A = args[0]
+
+	// Get the state from the ledger
+	Avalbytes, err := stub.GetState(A)
+	if err != nil {
+		jsonResp := "{\"Error\":\"Failed to get state for " + A + "\"}"
+		return nil, errors.New(jsonResp)
+	}
+
+	if Avalbytes == nil {
+		jsonResp := "{\"Error\":\"Nil amount for " + A + "\"}"
+		return nil, errors.New(jsonResp)
+	}
+
+	jsonResp := "{\"Name\":\"" + A + "\",\"Amount\":\"" + string(Avalbytes) + "\"}"
+	fmt.Printf("Query Response:%s\n", jsonResp)
+	return Avalbytes, nil
 }
 
 func main() {
